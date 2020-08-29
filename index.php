@@ -81,5 +81,7 @@
     </div>
 
     <?php $conn->close(); ?>
+
+    <script src="js/app.js"></script>
 </body>
 </html>

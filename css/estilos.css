@@ -102,6 +102,9 @@ div.existentes  table td {
   padding: 10px 0;
   line-height: 20px;
 }
+div.existentes  table td.borrar a {
+  background-color: #ff0000;
+}
 div.existentes h2 {
   margin-bottom: 20px;
 }
