@@ -7,8 +7,6 @@
 
         $resultado = $conn->query($sql);
 
-
-
         
         
     } catch (Exception $e) {
@@ -53,13 +51,13 @@
             <h2>Contactos Existentes</h2>
             <p>Número de Contactos: <?php echo $resultado->num_rows; ?></p>
 
-            <table>
+            <table id="registrados">
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Telefono</th>
                         <th>Editar</th>
-                        <th>Borrar</th>
+                        <th><button type="button" name="borrar" id="btn_borrar" class="borrar">Borrar</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,7 +67,9 @@
                             <td><?php echo $registros['nombre']; ?></td>
                             <td><?php echo $registros['telefono']; ?></td>
                             <td><a href="editar.php?id=<?php echo $registros['id'];?>">Editar</a></td>
-                            <td class="borrar"><a href="borrar.php?id=<?php echo $registros['id'];?>">Borrar</a></td>
+                            <td class="borrar">
+                                <input type="checkbox" name="<?php echo $registros['id'];?>" id="<?php echo $registros['id'];?>">
+                            </td>
                         </tr>
 
                     <?php endwhile; ?>
