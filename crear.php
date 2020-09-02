@@ -29,7 +29,8 @@
 
         if(peticion_ajax()) {
             echo json_encode(array(
-                'respuesta' => $resultado
+                'respuesta' => $resultado,
+                'nombre' => $nombre
             ));
         } else {
             exit;
