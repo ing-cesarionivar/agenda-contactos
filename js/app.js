@@ -8,6 +8,7 @@ let btn_borrar = document.getElementById('btn_borrar');
 let tableBody = document.getElementsByTagName('tbody');
 let divExistentes = document.getElementsByClassName('existentes');
 let inputBuscador =  document.getElementById('buscador');
+let totalRegistros = document.getElementById('total');
 
 function registroExitoso(nombre) {
 
@@ -193,6 +194,33 @@ btn_borrar.addEventListener('click', function(){
     checkboxSeleccionado();
 });
 
+function actualizarNumero() {
+    let registros = tableBody[0].getElementsByTagName('tr');
+
+    let cantidad = 0;
+    let ocultos = 0;
+
+    for (let i = 0; i < registros.length; i++) {
+        let elementos = registros[i];
+
+        if(elementos.style.display == 'table-row') {
+            cantidad++;
+            totalRegistros.innerHTML = cantidad;
+
+        } else {
+            if(elementos.style.display == 'none') {
+                ocultos++;
+                if(ocultos == registros.length) {
+                    ocultos -= registros.length;
+                    totalRegistros.innerHTML = ocultos;
+                }
+            }
+        }
+                
+    }
+
+}
+
 function ocultarRegistro(nombre_buscar) {
     // Varaible para todos los registros
     let registros = tableBody[0].getElementsByTagName('tr');
@@ -212,6 +240,8 @@ function ocultarRegistro(nombre_buscar) {
             
         }
     }
+
+    actualizarNumero();
 }
 
 inputBuscador.addEventListener('input', function() {

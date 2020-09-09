@@ -53,7 +53,7 @@
                 <input type="text" name="buscador" id="buscador" placeholder="Buscar" class="buscador">
             </div>
             <h2>Contactos Existentes</h2>
-            <p>Número de Contactos: <?php echo $resultado->num_rows; ?></p>
+            <p>Número de Contactos: <span id="total"><?php echo $resultado->num_rows; ?></span></p>
 
             <table id="registrados">
                 <thead>
