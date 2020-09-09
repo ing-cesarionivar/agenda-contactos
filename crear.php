@@ -1,8 +1,5 @@
 <?php
-
-    function peticion_ajax() {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
-    }
+    include_once("functions/peticion_ajax.php");
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 

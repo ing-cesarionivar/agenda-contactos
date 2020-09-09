@@ -4,6 +4,7 @@ let action = formulario.getAttribute('action');
 let divCrear = document.getElementById('crear_contacto');
 let tablaRegistrados = document.getElementById('registrados');
 let checkboxes = document.getElementsByClassName('borrar_contacto');
+let btn_borrar = document.getElementById('btn_borrar');
 
 function registroExitoso(nombre) {
 
@@ -101,6 +102,39 @@ function crearUsuario() {
 
 }
 
+function contactosEliminar(contactos) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'borrar.php?id=' + contactos, true);
+    console.log('borrar.php?id=' + contactos);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4 && xhr.status == 200) {
+            let resultadoBorrar = xhr.responseText;
+            let json = JSON.parse(resultadoBorrar);
+            if(json.respuesta == false) {
+                alert("Selecciona un elemento");
+            } else {
+                console.log("Resultado: " + resultadoBorrar);
+                console.log("SQL: " + json.sql);
+            }
+        }
+    }
+    xhr.send();
+}
+
+function checkboxSeleccionado() {
+    let contactos = [];
+    for(i = 0; i < checkboxes.length; i++) {
+        if(checkboxes[i].checked == true) {
+            contactos.push(checkboxes[i].name);
+        }
+    }
+    
+    contactosEliminar(contactos);
+}
+
+
+
 for(let i = 0; i < checkboxes.length; i++) {
     checkboxes[i].addEventListener('change', function() {
         if(this.checked) {
@@ -115,4 +149,10 @@ for(let i = 0; i < checkboxes.length; i++) {
 agregarContacto.addEventListener('click', function(e){
     e.preventDefault();
     crearUsuario();
+});
+
+btn_borrar.addEventListener('click', function(){
+
+    checkboxSeleccionado();
+
 });
