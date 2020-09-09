@@ -3,6 +3,7 @@ let formulario = document.getElementById('formulario_crear_usuario');
 let action = formulario.getAttribute('action');
 let divCrear = document.getElementById('crear_contacto');
 let tablaRegistrados = document.getElementById('registrados');
+let checkboxes = document.getElementsByClassName('borrar_contacto');
 
 function registroExitoso(nombre) {
 
@@ -98,6 +99,17 @@ function crearUsuario() {
 
     xhr.send(form_datos);
 
+}
+
+for(let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener('change', function() {
+        if(this.checked) {
+            this.parentNode.parentNode.classList.add('activo');
+            
+        } else {
+            this.parentNode.parentNode.classList.remove('activo');
+        }
+    });
 }
 
 agregarContacto.addEventListener('click', function(e){

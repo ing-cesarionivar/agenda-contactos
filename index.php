@@ -68,7 +68,7 @@
                             <td><?php echo $registros['telefono']; ?></td>
                             <td><a href="editar.php?id=<?php echo $registros['id'];?>">Editar</a></td>
                             <td class="borrar">
-                                <input type="checkbox" name="<?php echo $registros['id'];?>" id="<?php echo $registros['id'];?>">
+                                <input class="borrar_contacto" type="checkbox" name="<?php echo $registros['id'];?>" id="<?php echo $registros['id'];?>">
                             </td>
                         </tr>
 
