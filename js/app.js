@@ -7,6 +7,7 @@ let checkboxes = document.getElementsByClassName('borrar_contacto');
 let btn_borrar = document.getElementById('btn_borrar');
 let tableBody = document.getElementsByTagName('tbody');
 let divExistentes = document.getElementsByClassName('existentes');
+let inputBuscador =  document.getElementById('buscador');
 
 function registroExitoso(nombre) {
 
@@ -189,7 +190,30 @@ agregarContacto.addEventListener('click', function(e){
 });
 
 btn_borrar.addEventListener('click', function(){
-
     checkboxSeleccionado();
+});
 
+function ocultarRegistro(nombre_buscar) {
+    // Varaible para todos los registros
+    let registros = tableBody[0].getElementsByTagName('tr');
+
+    // Expression regular que busca el nobre con case insensitive
+    let expresion = new RegExp(nombre_buscar, 'i');
+
+    for (let i = 0; i < registros.length; i++) {
+        
+        registros[i].style.display = 'none';
+        
+        if(registros[i].childNodes[1].textContent.search(expresion) != -1) {
+            registros[i].style.display = 'table-row';
+            
+        } else if(nombre_buscar == '') {
+            registros[i].style.display = 'table-row';
+            
+        }
+    }
+}
+
+inputBuscador.addEventListener('input', function() {
+    ocultarRegistro(this.value);
 });

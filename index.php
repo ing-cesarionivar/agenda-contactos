@@ -48,6 +48,10 @@
         </div> <!--.contenido-->
 
         <div class="contenido existentes">
+            <div class="buscar">
+                <h2>Buscar</h2>
+                <input type="text" name="buscador" id="buscador" placeholder="Buscar" class="buscador">
+            </div>
             <h2>Contactos Existentes</h2>
             <p>Número de Contactos: <?php echo $resultado->num_rows; ?></p>
 
