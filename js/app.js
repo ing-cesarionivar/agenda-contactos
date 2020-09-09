@@ -5,6 +5,7 @@ let divCrear = document.getElementById('crear_contacto');
 let tablaRegistrados = document.getElementById('registrados');
 let checkboxes = document.getElementsByClassName('borrar_contacto');
 let btn_borrar = document.getElementById('btn_borrar');
+let tableBody = document.getElementsByTagName('tbody');
 
 function registroExitoso(nombre) {
 
@@ -102,6 +103,15 @@ function crearUsuario() {
 
 }
 
+function eliminarHTML(ids_borrados) {
+    console.log(ids_borrados);
+    for(i = 0; i < ids_borrados.length; i++) {
+        let elementoBorrar = document.getElementById(ids_borrados[i]);
+        tableBody[0].removeChild(elementoBorrar);
+    }
+}
+
+
 function contactosEliminar(contactos) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'borrar.php?id=' + contactos, true);
@@ -115,7 +125,7 @@ function contactosEliminar(contactos) {
                 alert("Selecciona un elemento");
             } else {
                 console.log("Resultado: " + resultadoBorrar);
-                console.log("SQL: " + json.sql);
+                eliminarHTML(contactos);
             }
         }
     }

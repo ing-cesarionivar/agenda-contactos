@@ -63,7 +63,7 @@
                 <tbody>
                     <?php while($registros = $resultado->fetch_assoc()): ?>
 
-                        <tr>
+                        <tr id="<?php echo $registros['id']; ?>">
                             <td><?php echo $registros['nombre']; ?></td>
                             <td><?php echo $registros['telefono']; ?></td>
                             <td><a href="editar.php?id=<?php echo $registros['id'];?>">Editar</a></td>
