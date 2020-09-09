@@ -6,6 +6,7 @@ let tablaRegistrados = document.getElementById('registrados');
 let checkboxes = document.getElementsByClassName('borrar_contacto');
 let btn_borrar = document.getElementById('btn_borrar');
 let tableBody = document.getElementsByTagName('tbody');
+let divExistentes = document.getElementsByClassName('existentes');
 
 function registroExitoso(nombre) {
 
@@ -103,6 +104,31 @@ function crearUsuario() {
 
 }
 
+function mostrarEliminado() {
+    // Crear div y agregar id
+    let divEliminado = document.createElement('DIV');
+    divEliminado.setAttribute('id', 'borrado');
+
+    // Agregar texto 
+    let texto = document.createTextNode('Eliminado de la lista de contactos');
+    divEliminado.appendChild(texto);
+
+    // Agregar al HTML
+    divExistentes[0].insertBefore(divEliminado, divExistentes[0].childNodes[0]);
+
+    // Agregar clase de CSS
+    divEliminado.classList.add('mostrar');
+
+    // Ocultar el mensaje de eliminacion
+    setTimeout(function () {  
+        divEliminado.classList.add('ocultar');
+        setTimeout(function() {
+            let divPadreMensaje = divEliminado.parentNode;
+            divPadreMensaje.removeChild(divEliminado);
+        }, 500);
+    }, 3000);
+}
+
 function eliminarHTML(ids_borrados) {
     console.log(ids_borrados);
     for(i = 0; i < ids_borrados.length; i++) {
@@ -126,6 +152,7 @@ function contactosEliminar(contactos) {
             } else {
                 console.log("Resultado: " + resultadoBorrar);
                 eliminarHTML(contactos);
+                mostrarEliminado();
             }
         }
     }
