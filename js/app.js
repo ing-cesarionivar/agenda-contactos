@@ -293,12 +293,48 @@ function recorrerBotonesEditar() {
     for(let i = 0; i < btn_editar.length; i++) {
         btn_editar[i].addEventListener('click', function(event){
             event.preventDefault();
-
+            deshabilitarEdicion();
             let registroActivo = this.parentNode.parentNode;
             registroActivo.classList.add('modo-edicion');
+            registroActivo.classList.remove('desactivado');
 
+            // Actualizamos el registro en especifico
+            actualizarRegistro(registroActivo.id);
         });
     }
+}
+
+function deshabilitarEdicion() {
+    let registrosTr = document.querySelectorAll('#registrados tbody tr');
+    for(let i = 0; i < registrosTr.length; i++) {
+        registrosTr[i].classList.add('desactivado');
+    }
+}
+
+function actualizarRegistro(idRegistro) {
+    
+    // Seleccionar boton de guardar del registro especifico (Se pasa el id)
+    let btnGuardar = document.getElementById(idRegistro).getElementsByClassName('guardarBtn');
+
+    btnGuardar[0].addEventListener('click', function(e){
+        e.preventDefault();
+
+        // Obtiene el valor del campo nombre
+        let inputNombreNuevo = document.getElementById(idRegistro).getElementsByClassName('nombre_contacto');
+        let nombreNuevo = inputNombreNuevo[0].value;
+        
+        // Obtiene el valor del campo telefono
+        let inputTelefonoNuevo = document.getElementById(idRegistro).getElementsByClassName('telefono_contacto');
+        let telefonoNuevo =  inputTelefonoNuevo[0].value;
+        
+        let contacto = {
+            nombre: nombreNuevo,
+            telefono: telefonoNuevo,
+            id: idRegistro
+        };
+
+    });
+
 }
 
 document.addEventListener('DOMContentLoaded', function(event){
