@@ -71,9 +71,22 @@
                     <?php while($registros = $resultado->fetch_assoc()): ?>
 
                         <tr id="<?php echo $registros['id']; ?>">
-                            <td><?php echo $registros['nombre']; ?></td>
-                            <td><?php echo $registros['telefono']; ?></td>
-                            <td><a href="editar.php?id=<?php echo $registros['id'];?>">Editar</a></td>
+                            <td>
+                                <p>
+                                    <?php echo $registros['nombre']; ?>
+                                </p>
+                                <input type="text" name="nombre_<?php echo $registros['id']; ?>" value="<?php echo $registros['nombre']; ?>" class="nombre_contacto">
+                            </td>
+                            <td>
+                                <p>
+                                    <?php echo $registros['telefono']; ?>
+                                </p>
+                                <input type="text" name="telefono_<?php echo $registros['id']; ?>" value="<?php echo $registros['telefono']; ?>" class="telefono_contacto">
+                            </td>
+                            <td>
+                                <a href="#" class="editarBtn">Editar</a>
+                                <a href="#" class="guardarBtn">Guardar</a>
+                            </td>
                             <td class="borrar">
                                 <input class="borrar_contacto" type="checkbox" name="<?php echo $registros['id'];?>" id="<?php echo $registros['id'];?>">
                             </td>

@@ -202,3 +202,18 @@ div.buscar h2 {
 .ocultar {
   animation: ocultar .5s ease-in 1 alternate;
 }
+
+/* Modo Edicion */
+
+.modo-edicion p,
+.modo-edicion .editarBtn,
+tbody tr input[type="text"],
+div.existentes table a.guardarBtn {
+  display: none;
+}
+
+.modo-edicion input[type="text"],
+div.existentes table tr.modo-edicion a.guardarBtn {
+  display: block;
+}
+

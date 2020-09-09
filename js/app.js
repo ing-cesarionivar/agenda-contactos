@@ -69,6 +69,20 @@ function construirTemplate(nombre, telefono, registro_id) {
     tdCheckbox.classList.add('borrar');
     tdCheckbox.appendChild(checkBorrar);
 
+    // Crear input con el nombre
+    let inputNombre = document.createElement('input');
+    inputNombre.type = 'text';
+    inputNombre.name = 'contacto_' + registro_id;
+    inputNombre.value = nombre;
+    tdNombre.appendChild(inputNombre);
+
+    // Crear input con el telefono
+    let inputTelefono = document.createElement('input');
+    inputTelefono.type = 'text';
+    inputTelefono.name = 'telefono_' + registro_id;
+    inputTelefono.value = telefono;
+    tdTelefono.appendChild(inputTelefono);
+
     // Agregar al TR
     let trContacto = document.createElement('tr');
     trContacto.appendChild(tdNombre);
@@ -269,4 +283,24 @@ checkTodos.addEventListener('click', function(){
 
     }
 
+});
+
+/* Editar registros */
+
+function recorrerBotonesEditar() {
+    let btn_editar =  tableBody[0].querySelectorAll('.editarBtn');
+    
+    for(let i = 0; i < btn_editar.length; i++) {
+        btn_editar[i].addEventListener('click', function(event){
+            event.preventDefault();
+
+            let registroActivo = this.parentNode.parentNode;
+            registroActivo.classList.add('modo-edicion');
+
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function(event){
+    recorrerBotonesEditar();
 });
