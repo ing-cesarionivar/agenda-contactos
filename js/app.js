@@ -83,7 +83,7 @@ function crearUsuario() {
     let form_datos = new FormData(formulario);
     
     for([key, value] of form_datos.entries()) {
-        console.log(key + ": " + value);
+        // console.log(key + ": " + value);
     }
      
     let xhr = new XMLHttpRequest();
@@ -132,7 +132,7 @@ function mostrarEliminado() {
 }
 
 function eliminarHTML(ids_borrados) {
-    console.log(ids_borrados);
+    // console.log(ids_borrados);
     for(i = 0; i < ids_borrados.length; i++) {
         let elementoBorrar = document.getElementById(ids_borrados[i]);
         tableBody[0].removeChild(elementoBorrar);
@@ -143,7 +143,7 @@ function eliminarHTML(ids_borrados) {
 function contactosEliminar(contactos) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'borrar.php?id=' + contactos, true);
-    console.log('borrar.php?id=' + contactos);
+    // console.log('borrar.php?id=' + contactos);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.onreadystatechange = function() {
         if(xhr.readyState == 4 && xhr.status == 200) {
@@ -152,7 +152,7 @@ function contactosEliminar(contactos) {
             if(json.respuesta == false) {
                 alert("Selecciona un elemento");
             } else {
-                console.log("Resultado: " + resultadoBorrar);
+                // console.log("Resultado: " + resultadoBorrar);
                 eliminarHTML(contactos);
                 mostrarEliminado();
             }
@@ -229,13 +229,12 @@ function ocultarRegistro(nombre_buscar) {
     let expresion = new RegExp(nombre_buscar, 'i');
 
     for (let i = 0; i < registros.length; i++) {
-        
+        registros[i].classList.add('ocultar');
         registros[i].style.display = 'none';
         
-        if(registros[i].childNodes[1].textContent.search(expresion) != -1) {
-            registros[i].style.display = 'table-row';
-            
-        } else if(nombre_buscar == '') {
+        if(registros[i].childNodes[1].textContent.search(expresion) != -1 || nombre_buscar == '') {
+            registros[i].classList.add('mostrar');
+            registros[i].classList.remove('ocultar');
             registros[i].style.display = 'table-row';
             
         }
