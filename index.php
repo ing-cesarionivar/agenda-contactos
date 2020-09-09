@@ -61,7 +61,10 @@
                         <th>Nombre</th>
                         <th>Telefono</th>
                         <th>Editar</th>
-                        <th><button type="button" name="borrar" id="btn_borrar" class="borrar">Borrar</button></th>
+                        <th>
+                            <button type="button" name="borrar" id="btn_borrar" class="borrar">Borrar</button>
+                            <input type="checkbox" id="borrar_todos">
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

@@ -9,6 +9,7 @@ let tableBody = document.getElementsByTagName('tbody');
 let divExistentes = document.getElementsByClassName('existentes');
 let inputBuscador =  document.getElementById('buscador');
 let totalRegistros = document.getElementById('total');
+let checkTodos = document.getElementById('borrar_todos');
 
 function registroExitoso(nombre) {
 
@@ -245,4 +246,27 @@ function ocultarRegistro(nombre_buscar) {
 
 inputBuscador.addEventListener('input', function() {
     ocultarRegistro(this.value);
+});
+
+// Seleccionar todos para eliminar 
+checkTodos.addEventListener('click', function(){
+    
+    if(this.checked) {
+
+        let todosRegistros = tableBody[0].getElementsByTagName('tr');
+        for(let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = true;
+            todosRegistros[i].classList.add('activo');
+        }
+
+    } else {
+
+        let todosRegistros = tableBody[0].getElementsByTagName('tr');
+        for(let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+            todosRegistros[i].classList.remove('activo');
+        }
+
+    }
+
 });
