@@ -1,71 +1,40 @@
 <?php
 
-    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+    include_once("functions/peticion_ajax.php");
 
-        if (!empty($_GET['nombre'])) {
-            $nombre = $_GET['nombre'];
-            $nombre = filter_var($nombre, FILTER_SANITIZE_STRING);
+    $datos = $_GET['datos'];
+    $datos = json_decode($datos, true);
 
-        }
+    $nombre = $datos['nombre'];
+    $nombre = filter_var($nombre, FILTER_SANITIZE_STRING);
+    $telefono = $datos['telefono'];
+    $id = $datos['id'];
 
-        if(!empty($_GET['numero'])) {
-            $telefono = $_GET['numero'];
-        } 
-
-        if(!empty($_GET['id'])) {
-            $id = $_GET['id'];
-        } 
-    } else {
-        header("Location: index.php");
-    }
-
-    try {
-        require_once('functions/bd_conexion.php');
-
-        $sql = "UPDATE contactos SET nombre = '{$nombre}', telefono = '{$telefono}' WHERE id = '{$id}';";
-
-        $resultado = $conn->query($sql);
-
-        
-        
-    } catch (Exception $e) {
-
-        $error = $e->getMessage();
-        
-    }
-
-
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda PHP</title>
-    <link rel="stylesheet" href="css/estilos.css">
-</head>
-<body>
+    if(peticion_ajax()) {
+        try {
+            require_once('functions/bd_conexion.php');
     
-    <div class="contenedor">
-      <h1>Agenda de Contactos</h1>
-
-        <div class="contenido">
-            <?php 
-                if($resultado) {
-                    echo "Contacto actualizado";
-                } else {
-                    echo "Error " . $conn->error;
-                }
-            ?>
-            <br>
-            <a class="volver" href="index.php">Volver a inicio</a>    
-        </div>
-
-    </div>
-
-    <?php
+            $sql = "UPDATE contactos SET nombre = '{$nombre}', telefono = '{$telefono}' WHERE id = '{$id}';";
+    
+            $resultado = $conn->query($sql);
+    
+            echo json_encode(array(
+                'respuesta' => $resultado,
+                'nombre' => $nombre,
+                'id' => $id,
+                'telefono' => $telefono
+            ));
+            
+        } catch (Exception $e) {
+    
+            $error = $e->getMessage();
+            
+        }
         $conn->close();
-    ?>
 
-</body>
-</html>
+    } else {
+
+        exit;
+    }
+    
+?>

@@ -327,14 +327,48 @@ function actualizarRegistro(idRegistro) {
         let inputTelefonoNuevo = document.getElementById(idRegistro).getElementsByClassName('telefono_contacto');
         let telefonoNuevo =  inputTelefonoNuevo[0].value;
         
+        // Objeto con todos los datos
         let contacto = {
             nombre: nombreNuevo,
             telefono: telefonoNuevo,
             id: idRegistro
         };
 
+        actualizarAjax(contacto);
+
     });
 
+}
+
+function actualizarAjax(datosContacto) {
+    
+    // Convierte objeto a Json
+    let jsonContacto = JSON.stringify(datosContacto);
+
+    // Crear la conexión
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'actualizar.php?datos=' + jsonContacto, true);
+    // console.log('borrar.php?id=' + contactos);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4 && xhr.status == 200) {
+            let resultadoActualizar = xhr.responseText;
+            let resultadoJson = JSON.parse(resultadoActualizar);
+            if(resultadoJson.respuesta == true) {
+                let registroActivo =  document.getElementById(datosContacto.id);
+                registroActivo.childNodes[1].childNodes[1].innerHTML = resultadoJson.nombre;
+
+                // Borrar modo edicion
+                registroActivo.classList.remove('modo-edicion');
+                habilitarEdicion();
+                
+            } else {
+                console.log("Hubo en error!");
+            }
+            
+        }
+    }
+    xhr.send();  
 }
 
 document.addEventListener('DOMContentLoaded', function(event){
