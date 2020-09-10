@@ -41,22 +41,49 @@ function construirTemplate(nombre, telefono, registro_id) {
     // Crear nombre de contacto
     let tdNombre = document.createElement('td');
     let textoNombre = document.createTextNode(nombre);
-    tdNombre.appendChild(textoNombre);
+    let parrafoNombre = document.createElement('P');
+    parrafoNombre.appendChild(textoNombre)
+    tdNombre.appendChild(parrafoNombre);
+
+    // Crear input con el nombre
+    let inputNombre = document.createElement('input');
+    inputNombre.type = 'text';
+    inputNombre.name = 'contacto_' + registro_id;
+    inputNombre.value = nombre;
+    inputNombre.classList.add('nombre_contacto');
 
     // Crear telefono de contacto
     let tdTelefono = document.createElement('td');
     let textoTelefono = document.createTextNode(telefono);
-    tdTelefono.appendChild(textoTelefono);
+    let parrafoTelefono = document.createElement('P');
+    parrafoTelefono.appendChild(textoTelefono);
+    tdTelefono.appendChild(parrafoTelefono);
+
+    // Crear input con el telefono
+    let inputTelefono = document.createElement('input');
+    inputTelefono.type = 'text';
+    inputTelefono.name = 'telefono_' + registro_id;
+    inputTelefono.value = telefono;
+    inputTelefono.classList.add('telefono_contacto');
 
     // Crear enlace para editar
     let nodoBtn = document.createElement('a');
     textoEnlace = document.createTextNode('Editar');
     nodoBtn.appendChild(textoEnlace);
-    nodoBtn.href = 'editar.php?id=' + registro_id;
+    nodoBtn.href = '#';
+    nodoBtn.classList.add('editarBtn');
+
+    // Crear boton para guardar
+    let btnGuardar = document.createElement('a');
+    textoGuardar = document.createTextNode('Guardar');
+    btnGuardar.appendChild(textoGuardar);
+    btnGuardar.href = '#';
+    btnGuardar.classList.add('guardarBtn');
 
     // Agregar el boton al td
     let nodoTdEditar = document.createElement('td');
     nodoTdEditar.appendChild(nodoBtn);
+    nodoTdEditar.appendChild(btnGuardar);
 
     // Crear checkbox para borrar
     let checkBorrar = document.createElement('input');
@@ -69,18 +96,8 @@ function construirTemplate(nombre, telefono, registro_id) {
     tdCheckbox.classList.add('borrar');
     tdCheckbox.appendChild(checkBorrar);
 
-    // Crear input con el nombre
-    let inputNombre = document.createElement('input');
-    inputNombre.type = 'text';
-    inputNombre.name = 'contacto_' + registro_id;
-    inputNombre.value = nombre;
+    // Agregar nombre y telefono para editar
     tdNombre.appendChild(inputNombre);
-
-    // Crear input con el telefono
-    let inputTelefono = document.createElement('input');
-    inputTelefono.type = 'text';
-    inputTelefono.name = 'telefono_' + registro_id;
-    inputTelefono.value = telefono;
     tdTelefono.appendChild(inputTelefono);
 
     // Agregar al TR
@@ -91,6 +108,10 @@ function construirTemplate(nombre, telefono, registro_id) {
     trContacto.appendChild(tdCheckbox);
 
     tablaRegistrados.childNodes[3].appendChild(trContacto);
+
+    actualizarNumero();
+    recorrerBotonesEditar();
+    recorrerBotonesGuardar(registro_id);
 }
 
 function crearUsuario() {
@@ -285,6 +306,16 @@ checkTodos.addEventListener('click', function(){
 
 });
 
+/* Recorrer botones de guardar */
+function recorrerBotonesGuardar(id) {
+    let btn_guardar = document.querySelectorAll('.guardarBtn');
+    for(let i = 0; i < btn_guardar.length; i++) {
+        btn_guardar[i].addEventListener('click', function(){
+            actualizarRegistro(id);
+        });
+    }
+}
+
 /* Editar registros */
 
 function recorrerBotonesEditar() {
@@ -356,11 +387,16 @@ function actualizarAjax(datosContacto) {
             let resultadoJson = JSON.parse(resultadoActualizar);
             if(resultadoJson.respuesta == true) {
                 let registroActivo =  document.getElementById(datosContacto.id);
-                registroActivo.childNodes[1].childNodes[1].innerHTML = resultadoJson.nombre;
+                
+                // Inserta dinamicamente el nombre al html
+                registroActivo.getElementsByTagNam('td')[0].getElementsByTagName('p')[0].innerHTML = resultadoJson.nombre;
+
+                // Inserta dinamicamente el telefono al html
+                registroActivo.getElementsByTagName('td')[1].getElementsByTagName('p')[0].innerHTML = resultadoJson.telefono;
 
                 // Borrar modo edicion
                 registroActivo.classList.remove('modo-edicion');
-                habilitarEdicion();
+                // habilitarEdicion();
                 
             } else {
                 console.log("Hubo en error!");
